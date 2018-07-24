@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>合肥，加油！</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        .container{
+            margin: 0 auto;
+            width: 1200px;
+            text-align: center;
+
+        }
+        .input{
+            margin-bottom: 100px;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>计算机博弈调试工具</h1>
+    <div class="container">
+        <div class="input">
+                <input type="text" id="input" placeholder="输入平台DEAL命令或自定义牌列">
+ 
+                <input type="reset" id="reset"  value="重置">
+                
+        </div>
+        <canvas id="show_poker" width="700" height="150px"></canvas>
+    </div>
+    
+    <script src="./jquery-2.1.4.min.js"></script>
+    <script>
+        var canvas = document.getElementById("show_poker");
+		var ctx = canvas.getContext("2d");
+        document.getElementById('reset').addEventListener('click', function(){
+            document.getElementById('input').value='';
+           
+        })
+  
+  
+        var render = function(){
+            var bgImg = new Image();
+            bgImg.src = './img/bg.jpg';
+            ctx.drawImage(bgImg, 0, 0);
+            var code = document.getElementById('input').value;
+            code = code.replace(/\ +/g,"");  
+            var patrn = /^[0-9]*$/;
+            if(code[0]==='D'){
+                code = code.slice(6);
+            }
+            var code_arr = code.split(',');
+            code_arr.sort(function (x,y) {
+                return x-y;
+            });
+            for(var i=0;i<code_arr.length;i++){
+                var img = new Image();
+                if(!!code_arr[i]){
+                    img.src = './img/'+code_arr[i]+'.gif';
+                    ctx.drawImage(img, (i+2)*30, 15);
+                }
+                
+            }
+            
+        }
+        // var main = function() {
+		// 	render();
+			
+		// }
+        // main();
+        $(function(){
+            $('#input').change(function(){
+                console.log('ok')
+                render();
+            })
+        })
+        
+    </script>
+</body>
+</html>
